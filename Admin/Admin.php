@@ -654,6 +654,10 @@ abstract class Admin implements AdminInterface, DomainObjectInterface
      */
     public function create($object)
     {
+        if (!$object and $this->getForm()->isSubmitted()) {
+            $object = $this->getForm()->getData();
+        }
+
         $this->prePersist($object);
         foreach ($this->extensions as $extension) {
             $extension->prePersist($this, $object);
